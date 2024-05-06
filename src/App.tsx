@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './App.css';
+import { Box, Link, Switch, Typography } from '@mui/material';
 
 function App() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -44,15 +44,37 @@ function App() {
   };
 
   return (
-    <>
+    <Box width={160} height='auto' p={2}>
       <div>
-        <h2>Toggle Device</h2>
+        <Typography variant='h4'>Toggle Device</Typography>
       </div>
-      <div>
-        <button onClick={emulateDevice}>Click meeee</button>
-        {hasError ? <p>Something went wrong, please try again later</p> : null}
-      </div>
-    </>
+      <Box display='flex' flexDirection='column' alignItems='center'>
+        <Switch
+          checked={isMobile}
+          name='toggleDevice'
+          onChange={emulateDevice}
+        />
+        {hasError ? (
+          <Typography variant='caption'>
+            Something went wrong, please try again later
+          </Typography>
+        ) : null}
+        <Box display='flex' flexDirection='column' alignItems='center' gap={1}>
+          <Typography variant='body1' textAlign='left'>
+            Switch between Desktop and Mobile view
+          </Typography>
+          <Typography variant="overline">
+            Feel free to reach me {' '}
+            <Link
+              href='https://github.com/gusmagnago'
+              target='_blank'
+            >
+              here
+            </Link>
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

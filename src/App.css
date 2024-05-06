@@ -1,0 +1,13 @@
+/* Estilo para o botão */
+button {
+    border: 5px solid greenyellow;
+    background: transparent; /* Torna o botão transparente */
+    color: black; /* Ajusta a cor do texto conforme necessário */
+}
+
+/* Media query para telas menores */
+@media (width < 378px) {
+    button {
+        border: 5px solid red;
+    }
+}

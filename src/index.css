@@ -1,0 +1,15 @@
+#root {
+    margin: 0 auto;
+    text-align: center;
+    padding: 2em;
+}
+
+
+body {
+    margin: 0;
+    display: flex;
+    place-items: center;
+    width: auto;
+    height: auto;
+}
+

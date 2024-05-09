@@ -1,17 +1,26 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
-  typography: {
+  palette: {
+    primary: {
+      main: '#9FE870',
+    },
+    secondary: {
+      main: '#163300',
+      contrastText: '#fe2c96',
+    },
+  },
+  typography: (theme) => ({
     fontFamily: 'Inter, sans-serif',
     h4: {
-        fontSize: '1.2rem',
-        fontWeight: 800
+      fontSize: '1.2rem',
+      fontWeight: 800,
     },
     body1: {
       fontSize: '0.8rem',
     },
     caption: {
-      color: '#fe2c96',
+      color: theme.secondary.contrastText,
       fontSize: '0.55em',
       fontWeight: 600,
     },
@@ -19,7 +28,7 @@ const theme = createTheme({
       fontSize: '0.55em',
       fontWeight: 600,
     },
-  },
+  }),
   components: {
     MuiSwitch: {
       styleOverrides: {
@@ -34,22 +43,24 @@ const theme = createTheme({
             transform: 'translateX(85px)',
           },
         },
-        thumb: ({ ownerState: { checked } }) => ({
+        thumb: ({ ownerState: { checked }, theme: { palette } }) => ({
           width: '30px',
           height: '30px',
-          color: checked ? '#9FE870 !important' : '#163300',
+          color: checked ? palette.primary.main : palette.secondary.main,
         }),
-        track: ({ ownerState: { checked } }) => ({
+        track: ({ ownerState: { checked }, theme: { palette } }) => ({
           borderRadius: '20px',
-          backgroundColor: checked ? '#163300 !important' : '#9FE870',
+          backgroundColor: checked
+            ? `${palette.secondary.main} !important`
+            : palette.primary.main,
           position: 'relative',
           '&::after': {
             content: checked ? '"Mobile"' : '"Desktop"',
             position: 'absolute',
-            left: checked ? '50%' : '55%',
+            left: checked ? '48%' : '55%',
             top: '50%',
             transform: 'translate(-50%, -50%)',
-            color: checked ? '#9FE870' : '#163300',
+            color: checked ? palette.primary.main : palette.secondary.main,
             fontSize: '14px',
             fontWeight: 'bold',
             textAlign: 'center',
@@ -59,11 +70,11 @@ const theme = createTheme({
     },
     MuiLink: {
       styleOverrides: {
-        root: {
+        root: ({ theme: { palette } }) => ({
           underline: 'hover',
-          color: '#fe2c96',
+          color: palette.secondary.contrastText,
           fontWeight: 800,
-        },
+        }),
       },
     },
   },

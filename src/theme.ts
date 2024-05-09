@@ -10,7 +10,7 @@ const theme = createTheme({
       contrastText: '#fe2c96',
     },
   },
-  typography: (theme) => ({
+  typography: {
     fontFamily: 'Inter, sans-serif',
     h4: {
       fontSize: '1.2rem',
@@ -20,15 +20,14 @@ const theme = createTheme({
       fontSize: '0.8rem',
     },
     caption: {
-      color: theme.secondary.contrastText,
       fontSize: '0.55em',
-      fontWeight: 600,
+      fontWeight: 200,
     },
     overline: {
       fontSize: '0.55em',
       fontWeight: 600,
     },
-  }),
+  },
   components: {
     MuiSwitch: {
       styleOverrides: {

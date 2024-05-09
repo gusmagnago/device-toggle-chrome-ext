@@ -53,7 +53,7 @@ npm run build
 
 ## Privacy Policy
 
-This extension is designed to switch between desktop and mobile views only. It does not intend to access any data or perform any actions beyond this specific function. The code is straightforward and focused solely on providing a seamless transition between different views for a better browsing experience
+Read our [Privacy Policy](https://github.com/gusmagnago/device-toggle-chrome-ext/blob/main/privacyPolicy.md) here
 
 ### Examples:
 ![View with default browser state](public/exemp01.png)

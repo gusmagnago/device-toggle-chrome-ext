@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 
 import { Container } from '@mui/material';
 
+// Page not in use
 function PrivacyPolicy() {
   const [policyText, setPolicyText] = useState('');
 

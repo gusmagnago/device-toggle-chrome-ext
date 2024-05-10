@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Box, Link, Switch, Typography } from '@mui/material';
 
+
+// Page not in use
 function ExtensionView() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);

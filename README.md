@@ -4,6 +4,8 @@
 
 This project provides a simple switch to toggle between Desktop (larger viewports) and Mobile (375x812) views in a Chrome extension. Designed for users who do not intend to utilize other devtools functionalities, it offers a straightforward approach to device emulation without the complexity of full developer tools. Built with React, TypeScript, and Vite, and styled using Material-UI with custom overrides, the extension simplifies the user experience for those seeking just the device toggle feature.
 
+[Device Toggle Download](https://chromewebstore.google.com/detail/device-toggle/daoknkjhfjpkoomnkmeadpfgnclpbogd?hl=en-GB&utm_source=ext_sidebar)
+
 🖥️
 ```sh
 size: User's viewport

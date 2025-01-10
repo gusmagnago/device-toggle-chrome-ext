@@ -11,14 +11,17 @@ function App() {
       const [tab] = await chrome.tabs.query(queryOptions);
 
       if (tab && typeof tab.id === 'number') {
+        const deviceWidth = 375;
+        const deviceHeight = 600;
+
         if (!isMobile) {
           await chrome.debugger.attach({ tabId: tab.id }, '1.3');
           await chrome.debugger.sendCommand(
             { tabId: tab.id },
             'Emulation.setDeviceMetricsOverride',
             {
-              width: 375,
-              height: 812,
+              width: deviceWidth,
+              height: deviceHeight,
               deviceScaleFactor: 3,
               mobile: true,
               fitWindow: true,
@@ -46,7 +49,7 @@ function App() {
   return (
     <Box width={160} height='auto' p={2}>
       <div>
-        <Typography variant='h4'>Toggle Device</Typography>
+        <Typography variant='h4'>Device Toggle</Typography>
       </div>
       <Box display='flex' flexDirection='column' alignItems='center'>
         <Switch

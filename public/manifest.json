@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "version": "1.0.3",
+    "version": "1.0.4",
     "name": "Device Toggle",
     "description": "Simple device toggle to switch between Desktop and Mobile (375x600)",
     "action": {
@@ -8,7 +8,7 @@
     },
     "permissions": [
         "debugger",
-        "tabs"
+        "activeTab"
     ],
     "host_permissions": [
         "http://*/*",

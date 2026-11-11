@@ -15,6 +15,7 @@ const controller = createEmulationController({
     set: (items) => chrome.storage.session.set(items),
     remove: (key) => chrome.storage.session.remove(key),
   },
+  getTabUrl: async (tabId) => (await chrome.tabs.get(tabId)).url,
 });
 
 const FAILED_STATE: TabState = { isMobile: false, error: 'unknown' };

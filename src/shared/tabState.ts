@@ -1,4 +1,4 @@
-export type TabErrorCode = 'unknown';
+export type TabErrorCode = 'unknown' | 'restricted';
 
 export interface TabState {
   /** Whether the mobile viewport override is currently applied to the tab. */
@@ -9,7 +9,7 @@ export interface TabState {
 
 export const DEFAULT_TAB_STATE: TabState = { isMobile: false, error: null };
 
-const ERROR_CODES: readonly TabErrorCode[] = ['unknown'];
+const ERROR_CODES: readonly TabErrorCode[] = ['unknown', 'restricted'];
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;

@@ -1,5 +1,12 @@
 import { Box, Link, Switch, Typography } from '@mui/material';
 import { useTabEmulation } from './hooks/useTabEmulation';
+import type { TabErrorCode } from './shared/tabState';
+
+const ERROR_MESSAGES: Record<TabErrorCode, string> = {
+  unknown: 'Something went wrong, please try again later',
+  restricted:
+    "This page can't be switched to mobile view. Chrome blocks extensions on its own pages and the Chrome Web Store.",
+};
 
 const App = () => {
   const { state, toggle } = useTabEmulation();
@@ -17,7 +24,7 @@ const App = () => {
         />
         {state.error ? (
           <Typography variant='caption' color='#fe2c96'>
-            Something went wrong, please try again later
+            {ERROR_MESSAGES[state.error]}
           </Typography>
         ) : null}
         <Box display='flex' flexDirection='column' alignItems='center' gap={1}>

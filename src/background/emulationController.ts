@@ -1,7 +1,9 @@
+import { isRestrictedPageError, isRestrictedUrl } from '../shared/restrictedPages';
 import {
   isDefaultTabState,
   parseTabState,
   tabStateKey,
+  type TabErrorCode,
   type TabState,
 } from '../shared/tabState';
 
@@ -40,6 +42,8 @@ export interface StoragePort {
 export interface EmulationDeps {
   debugger: DebuggerPort;
   storage: StoragePort;
+  /** Resolves to undefined when the URL is not exposed to the extension. */
+  getTabUrl: (tabId: number) => Promise<string | undefined>;
 }
 
 export interface EmulationController {
@@ -57,9 +61,17 @@ export const isAlreadyAttachedError = (error: unknown): boolean =>
 export const isNotAttachedError = (error: unknown): boolean =>
   /not attached/i.test(errorMessage(error));
 
+class RestrictedPageError extends Error {}
+
+const toErrorCode = (error: unknown): TabErrorCode =>
+  error instanceof RestrictedPageError || isRestrictedPageError(error)
+    ? 'restricted'
+    : 'unknown';
+
 export const createEmulationController = ({
   debugger: debuggerPort,
   storage,
+  getTabUrl,
 }: EmulationDeps): EmulationController => {
   // Actions on the same tab run one at a time, so a quick double toggle or a
   // detach event landing mid-toggle cannot interleave reads and writes.
@@ -97,6 +109,11 @@ export const createEmulationController = ({
   const enableMobile = async (tabId: number): Promise<void> => {
     const target = { tabId };
     let attachedHere = true;
+
+    // Fail fast with a specific reason when we can see the URL. When we
+    // cannot, Chrome's own rejection of the attach is classified instead.
+    const url = await getTabUrl(tabId).catch(() => undefined);
+    if (isRestrictedUrl(url)) throw new RestrictedPageError(url);
 
     try {
       await debuggerPort.attach(target, PROTOCOL_VERSION);
@@ -150,8 +167,11 @@ export const createEmulationController = ({
         }
         next = { isMobile: !current.isMobile, error: null };
       } catch (error) {
-        console.error('Device Toggle: emulation failed', error);
-        next = { ...current, error: 'unknown' };
+        const code = toErrorCode(error);
+        if (code === 'unknown') {
+          console.error('Device Toggle: emulation failed', error);
+        }
+        next = { ...current, error: code };
       }
 
       await writeState(tabId, next);

@@ -14,7 +14,6 @@ const MOBILE_METRICS = {
   height: 600,
   deviceScaleFactor: 3,
   mobile: true,
-  fitWindow: true,
 };
 
 interface DebuggerTarget {

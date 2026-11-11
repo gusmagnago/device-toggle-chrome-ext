@@ -1,50 +1,15 @@
-import { useState } from 'react';
 import { Box, Link, Switch, Typography } from '@mui/material';
+import { useTabEmulation } from './hooks/useTabEmulation';
+import type { TabErrorCode } from './shared/tabState';
 
-function App() {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [hasError, setHasError] = useState<boolean>(false);
+const ERROR_MESSAGES: Record<TabErrorCode, string> = {
+  unknown: 'Something went wrong, please try again later',
+  restricted:
+    "This page can't be switched to mobile view. Chrome blocks extensions on its own pages and the Chrome Web Store.",
+};
 
-  const emulateDevice = async () => {
-    try {
-      const queryOptions = { active: true, currentWindow: true };
-      const [tab] = await chrome.tabs.query(queryOptions);
-
-      if (tab && typeof tab.id === 'number') {
-        const deviceWidth = 375;
-        const deviceHeight = 600;
-
-        if (!isMobile) {
-          await chrome.debugger.attach({ tabId: tab.id }, '1.3');
-          await chrome.debugger.sendCommand(
-            { tabId: tab.id },
-            'Emulation.setDeviceMetricsOverride',
-            {
-              width: deviceWidth,
-              height: deviceHeight,
-              deviceScaleFactor: 3,
-              mobile: true,
-              fitWindow: true,
-            }
-          );
-          setIsMobile(true);
-        } else {
-          await chrome.debugger.sendCommand(
-            { tabId: tab.id },
-            'Emulation.clearDeviceMetricsOverride',
-            {}
-          );
-          setIsMobile(false);
-          await chrome.debugger.detach({ tabId: tab.id });
-        }
-      } else {
-        throw new Error('Could not proceed, try again later');
-      }
-    } catch (error) {
-      setHasError(true);
-      console.error('Erro emulateDevice:', error);
-    }
-  };
+const App = () => {
+  const { state, toggle } = useTabEmulation();
 
   return (
     <Box width={160} height='auto' p={2}>
@@ -53,13 +18,13 @@ function App() {
       </div>
       <Box display='flex' flexDirection='column' alignItems='center'>
         <Switch
-          checked={isMobile}
+          checked={state.isMobile}
           name='toggleDevice'
-          onChange={emulateDevice}
+          onChange={toggle}
         />
-        {hasError ? (
+        {state.error ? (
           <Typography variant='caption' color='#fe2c96'>
-            Something went wrong, please try again later
+            {ERROR_MESSAGES[state.error]}
           </Typography>
         ) : null}
         <Box display='flex' flexDirection='column' alignItems='center' gap={1}>
@@ -93,6 +58,6 @@ function App() {
       </Box>
     </Box>
   );
-}
+};
 
 export default App;

@@ -10,9 +10,9 @@ Built for customer-support colleagues who needed to see a site the way a custome
 
 ## How it works
 
-- Manifest V3 extension with a React + TypeScript popup (MUI)
-- Attaches to the active tab via `chrome.debugger` and calls the Chrome DevTools Protocol: `Emulation.setDeviceMetricsOverride` to switch to mobile, `Emulation.clearDeviceMetricsOverride` to switch back
-- Minimal permissions: `debugger` and `activeTab`; no data collected ([privacy policy](privacyPolicy.md))
+- Manifest V3 extension with a React + TypeScript popup (MUI) and a background service worker that owns the emulation state per tab
+- The service worker attaches to the active tab via `chrome.debugger` and calls the Chrome DevTools Protocol: `Emulation.setDeviceMetricsOverride` to switch to mobile, `Emulation.clearDeviceMetricsOverride` to switch back
+- Minimal permissions: `debugger`, `activeTab` and `storage` (session-only, to remember which tabs are in mobile mode), with no host permissions; no data collected ([privacy policy](privacyPolicy.md))
 
 ## Run locally
 

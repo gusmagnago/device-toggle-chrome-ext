@@ -6,11 +6,16 @@ This privacy policy outlines the data practices for our extension. We respect yo
 
 ### 1. Data Collection
 
-- **Active Tab Access:**  
-  Our extension temporarily interacts with the currently active browser tab to enable device emulation functionality. This access is granted only while you are actively using the extension.
+The extension does not collect, transmit, or share any personal data. It has no servers, no analytics, and makes no network requests.
 
-- **Debugger Usage:**  
-  The extension uses the Chrome Debugger API to simulate mobile and desktop device behaviors. This interaction is limited to the active tab and does not access or modify sensitive data.
+- **Active Tab Access (`activeTab`):**  
+  When you open the extension, it identifies the currently active browser tab so that the device emulation is applied to that tab only.
+
+- **Debugger Usage (`debugger`):**  
+  The extension uses the Chrome Debugger API to switch the active tab between the mobile and desktop viewports. It sends exactly two commands: one to apply the mobile screen size and one to remove it.
+
+- **Session Storage (`storage`):**  
+  To remember which tabs are in mobile mode, the extension keeps the numeric tab ID, whether mobile mode is on, and the result of the last toggle (success or the kind of error) in the browser's session storage.
 
 ---
 
@@ -18,21 +23,26 @@ This privacy policy outlines the data practices for our extension. We respect yo
 
 - **Active Tab Access:**
 
-  - Used exclusively to perform the toggle device functionality within the extension (e.g., switching between desktop and mobile views).
-  - No identifiable data, such as tab URLs or tab content, is stored, transmitted, or shared.
+  - Used exclusively to perform the toggle device functionality (switching between desktop and mobile views).
+  - The tab's address may be checked on your device to tell you when a page cannot be emulated (for example, browser settings pages or the Chrome Web Store). It is never stored or transmitted.
 
 - **Debugger:**
-  - Used to emulate the mobile and desktop device environments.
-  - The debugger is detached immediately after completing the emulation.
-  - It does not access or alter personal data or content in the active tab.
+
+  - Attached to a tab when you switch it to mobile mode, and **it stays attached for as long as mobile mode is on for that tab**. Chrome shows a "Device Toggle started debugging this browser" notice during that time.
+  - Detached when you switch the tab back to desktop mode, close the tab, dismiss Chrome's debugging notice, or close the browser.
+  - While attached, it is used only to set and clear the screen size override. The extension does not read or change the page's content, network traffic, cookies, or any other data in the tab.
+
+- **Session Storage:**
+  - Holds only the per-tab state described above, on your device, in memory.
+  - A tab's entry is removed when it returns to desktop mode without an error or when the tab is closed, and everything is erased when the browser closes.
 
 ---
 
 ### 3. Data Protection
 
-- The extension does not collect, store, or share any tab information beyond the temporary scope required for the toggle functionality.
-- The debugger access is temporary and only active while the extension is in use. It is detached automatically once the toggle operation is complete.
-- No data accessed by the extension is shared with third parties or retained after its immediate use.
+- The extension requests no host permissions, so it has no standing access to the websites you visit.
+- Debugger access exists only on tabs you have switched to mobile mode, and only until mobile mode is turned off for that tab.
+- Nothing the extension handles leaves your device, is shared with third parties, or persists after the browser session ends.
 
 ---
 
